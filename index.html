@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHOST - Green House Over Smart Technology</title>
+    <style>
+        /* Base Reset & Variables */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        :root {
+            --bg-main: #0b110e;
+            --bg-card: #121e1a;
+            --border-color: #1b332b;
+            --text-main: #f4f7f5;
+            --text-muted: #879b93;
+            --accent-green: #10b981;
+            --accent-hover: #059669;
+            --accent-glow: rgba(16, 185, 129, 0.15);
+            --font-stack: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 60px;
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header / Navbar */
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            background-color: rgba(11, 17, 14, 0.8);
+            z-index: 100;
+        }
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo span {
+            color: var(--accent-green);
+        }
+        .badge {
+            background-color: var(--border-color);
+            color: var(--accent-green);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 60px 0;
+            text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 40px auto;
+        }
+
+        /* Button CTA */
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background-color: var(--accent-green);
+            color: #040706;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            padding: 16px 36px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-download:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(16, 185, 129, 0.4);
+        }
+        .btn-download:active {
+            transform: translateY(0);
+        }
+        .file-info {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 12px;
+        }
+
+        /* Live Preview / App Mockup Simulation */
+        .mockup-container {
+            margin: 60px auto;
+            max-width: 720px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .mockup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+        .mockup-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .mockup-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--accent-green);
+        }
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-green);
+        }
+        
+        /* Grid Telemetri */
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        @media (max-width: 580px) {
+            .telemetry-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 32px; }
+        }
+        .telemetry-card {
+            background-color: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+        }
+        .card-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .card-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-top: 4px;
+            color: var(--text-main);
+        }
+        .card-value span {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 40px 0;
+            border-top: 1px solid var(--border-color);
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .feature-item {
+            background-color: rgba(255,255,255,0.01);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .feature-icon {
+            color: var(--accent-green);
+            margin-bottom: 12px;
+        }
+        .feature-item h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .feature-item p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Installation Guide */
+        .guide {
+            padding: 40px 0;
+            border-top: 1px solid var(--border-color);
+        }
+        .steps {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .step-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .step-number {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            background-color: var(--border-color);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--accent-green);
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-text h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .step-text p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 80px;
+            border-top: 1px solid var(--border-color);
+            padding: 30px 0;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-wrapper">
+            <div class="logo">GHOST<span>.</span></div>
+            <div class="badge">v1.0.0-release</div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Green House Over Smart Technology</h1>
+            <p class="subtitle">Platform IoT Pemantauan Telemetri Lingkungan dan Otomasi Aktuator Greenhouse Terdesentralisasi berbasis Edge Computing.</p>
+            
+            <!-- GANTI URL PADA href DENGAN DIRECT LINK GITHUB RELEASE ANDA -->
+            <a href="https://github.com/satrio-netdevops/ghost-smart-greenhouse/releases/download/1.0.0/app-arm64-v8a-release.apk" class="btn-download">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Unduh GHOST App (Android)
+            </a>
+            
+            <div class="file-info">Ekstensi: .apk | Target: Android (arm64-v8a) | Ukuran: ~22.7 MB</div>
+        </section>
+
+        <!-- App Simulation Mockup -->
+        <section class="mockup-container">
+            <div class="mockup-header">
+                <div class="mockup-title">Live Telemetry Dashboard Preview</div>
+                <div class="mockup-status">
+                    <div class="pulse-dot"></div>
+                    ESP32 Connected
+                </div>
+            </div>
+            <div class="telemetry-grid">
+                <div class="telemetry-card">
+                    <div class="card-label">Suhu Udara</div>
+                    <div class="card-value">29.5 <span>&deg;C</span></div>
+                </div>
+                <div class="telemetry-card">
+                    <div class="card-label">Kelembapan Udara</div>
+                    <div class="card-value">68.0 <span>%</span></div>
+                </div>
+                <div class="telemetry-card">
+                    <div class="card-label">Kelembapan Tanah</div>
+                    <div class="card-value">54.5 <span>%</span></div>
+                </div>
+                <div class="telemetry-card">
+                    <div class="card-label">Intensitas Cahaya</div>
+                    <div class="card-value">1450 <span>Lux</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+            <h2 class="section-title">Arsitektur Perangkat Lunak</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                    </div>
+                    <h3>Edge Processing Node</h3>
+                    <p>Firmware ESP32 menggunakan Non-Blocking State Machine berbasis asinkron millis() dan Direct Hardware State Polling guna memastikan sinkronisasi sirkuit yang andal.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                    </div>
+                    <h3>Cloud Event Broker</h3>
+                    <p>Integrasi Firebase Realtime Database melalui protokol WebSockets (Stream) untuk transmisi data asinkron dua arah dengan latensi di bawah satu detik.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                    </div>
+                    <h3>Reaktif Client UI</h3>
+                    <p>Aplikasi mobile Flutter yang dikompilasi via Ahead-of-Time (AOT) dengan skema Split-per-ABI guna merender visual telemetri secara mulus pada 60 FPS.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation Steps -->
+        <section class="guide">
+            <h2 class="section-title">Panduan Instalasi Android</h2>
+            <div class="steps">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-text">
+                        <h4>Unduh Berkas APK</h4>
+                        <p>Klik tombol unduh di atas menggunakan perangkat Android Anda untuk mendapatkan berkas biner aplikasi.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-text">
+                        <h4>Izin Sumber Tidak Dikenal</h4>
+                        <p>Jika peramban atau File Manager meminta izin untuk menginstal aplikasi dari luar Play Store, pilih "Izinkan" atau "Allow from this source".</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-text">
+                        <h4>Bypass Play Protect</h4>
+                        <p>Saat muncul peringatan keamanan merah dari Google Play Protect (Aplikasi Tidak Dikenal), jangan klik OK. Ketuk <strong>"Detail Selengkapnya / More Details"</strong> lalu pilih <strong>"Tetap Instal / Install Anyway"</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            &copy; 2026 GHOST Project - Teknologi Rekayasa Komputer. Sekolah Vokasi IPB University.
+        </div>
+    </footer>
+
+</body>
+</html>
