@@ -356,9 +356,12 @@ class SensorChartWidget extends ConsumerWidget {
         ),
       ),
 
-      // ── Rentang Y (Dinamis per metrik) ─────────────
+      // ── Rentang Y (Absolut per metrik) ─────────────
       minY: config.fixedMinY,
       maxY: config.fixedMaxY,
+
+      // ── Layer 2: Clip kanvas agar garis tidak menembus batas ──
+      clipData: FlClipData.all(),
 
       // ── Garis Data ────────────────────────────────
       lineBarsData: [
@@ -414,10 +417,17 @@ class SensorChartWidget extends ConsumerWidget {
   // ─────────────────────────────────────────────────────────
 
   /// Membangun list FlSpot dari data sensor berdasarkan metrik aktif.
+  ///
+  /// Layer 1: Nilai Y di-clamp ke [fixedMinY, fixedMaxY] agar data
+  /// yang anomali (noise sensor) tidak menyebabkan garis keluar batas.
   List<FlSpot> _buildSpots(List<SensorData> history, _MetricConfig config) {
     return List.generate(
       history.length,
-      (i) => FlSpot(i.toDouble(), config.getValue(history[i])),
+      (i) {
+        final rawY = config.getValue(history[i]);
+        final clampedY = rawY.clamp(config.fixedMinY, config.fixedMaxY);
+        return FlSpot(i.toDouble(), clampedY);
+      },
     );
   }
 
