@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "704997853642",
+    "firebase_url": "https://ghost-smartgreenhouse-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "ghost-smartgreenhouse",
+    "storage_bucket": "ghost-smartgreenhouse.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704997853642:android:c8d9c08c5cd1436e13a733",
+        "android_client_info": {
+          "package_name": "com.example.smartgreenhouse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYHLCmlWCQELpz-v9_aWUKlQaMgZw9Zdo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
