@@ -519,6 +519,7 @@ class _ThresholdSettingsSheetState
   late RangeValues _soilRange;
   late RangeValues _tempRange;
   late RangeValues _lightRange;
+  late RangeValues _humidityRange;
 
   @override
   void initState() {
@@ -527,6 +528,7 @@ class _ThresholdSettingsSheetState
     _soilRange = RangeValues(config.soilMoistureMin, config.soilMoistureMax);
     _tempRange = RangeValues(config.temperatureMin, config.temperatureMax);
     _lightRange = RangeValues(config.lightMin, config.lightMax);
+    _humidityRange = RangeValues(config.minHumidity, config.maxHumidity);
   }
 
   @override
@@ -570,10 +572,26 @@ class _ThresholdSettingsSheetState
         ),
         const SizedBox(height: 16),
 
-        // Temperature
+        // Humidity → Humidifier (NEW: replaces Temperature → Humidifier)
         _buildRangeSection(
           theme: theme,
-          title: 'Suhu → Humidifier',
+          title: 'Kelembapan → Humidifier',
+          icon: Icons.water_drop_outlined,
+          color: const Color(0xFF00BCD4),
+          range: _humidityRange,
+          min: 0, max: 100, unit: '%',
+          onChanged: (v) {
+            setState(() => _humidityRange = v);
+            ref.read(thresholdProvider.notifier)
+                .updateHumidity(min: v.start, max: v.end);
+          },
+        ),
+        const SizedBox(height: 16),
+
+        // Temperature (monitoring / automation lain)
+        _buildRangeSection(
+          theme: theme,
+          title: 'Suhu (Monitoring)',
           icon: Icons.thermostat_rounded,
           color: const Color(0xFFE53935),
           range: _tempRange,
@@ -613,6 +631,7 @@ class _ThresholdSettingsSheetState
                 _soilRange = RangeValues(d.soilMoistureMin, d.soilMoistureMax);
                 _tempRange = RangeValues(d.temperatureMin, d.temperatureMax);
                 _lightRange = RangeValues(d.lightMin, d.lightMax);
+                _humidityRange = RangeValues(d.minHumidity, d.maxHumidity);
               });
             },
             icon: const Icon(Icons.restart_alt_rounded, size: 18),
